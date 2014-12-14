@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from HotelInfoService WSDL service -->
+
+  <service name="HotelInfo" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://hotel_info.database.com"/>
+      <parameter name="wsdlServiceElement" value="HotelInfoService"/>
+      <parameter name="schemaQualified" value="http://hotel_info.database.com"/>
+      <parameter name="wsdlServicePort" value="HotelInfo"/>
+      <parameter name="className" value="com.database.hotel_info.HotelInfo"/>
+      <parameter name="wsdlPortType" value="HotelInfo"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://hotel_info.database.com" name="addNewHotel" qname="operNS:addNewHotel" soapAction="">
+        <parameter xmlns:pns="http://hotel_info.database.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:id" type="tns:string"/>
+        <parameter xmlns:pns="http://hotel_info.database.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:name" type="tns:string"/>
+        <parameter xmlns:pns="http://hotel_info.database.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:star" type="tns:int"/>
+        <parameter xmlns:pns="http://hotel_info.database.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:ward" type="tns:string"/>
+        <parameter xmlns:pns="http://hotel_info.database.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:county" type="tns:string"/>
+        <parameter xmlns:pns="http://hotel_info.database.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:city" type="tns:string"/>
+        <parameter xmlns:pns="http://hotel_info.database.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:full_address" type="tns:string"/>
+        <parameter xmlns:pns="http://hotel_info.database.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:website" type="tns:string"/>
+        <parameter xmlns:pns="http://hotel_info.database.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:email" type="tns:string"/>
+        <parameter xmlns:pns="http://hotel_info.database.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:phone" type="tns:string"/>
+        <parameter xmlns:pns="http://hotel_info.database.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:total_room" type="tns:int"/>
+        <parameter xmlns:pns="http://hotel_info.database.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:single_room_available" type="tns:int"/>
+        <parameter xmlns:pns="http://hotel_info.database.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:double_room_available" type="tns:int"/>
+        <parameter xmlns:pns="http://hotel_info.database.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:four_people_room_available" type="tns:int"/>
+        <parameter xmlns:pns="http://hotel_info.database.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:single_cost" type="tns:int"/>
+        <parameter xmlns:pns="http://hotel_info.database.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:double_cost" type="tns:int"/>
+        <parameter xmlns:pns="http://hotel_info.database.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:four_cost" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://hotel_info.database.com" name="main" qname="operNS:main" soapAction="">
+        <parameter xmlns:pns="http://hotel_info.database.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:args" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://hotel_info.database.com" xmlns:retNS="http://hotel_info.database.com" xmlns:rtns="http://hotel_info.database.com" xmlns:tns="http://hotel_info.database.com" name="findHotelByCity" qname="operNS:findHotelByCity" returnQName="retNS:findHotelByCityReturn" returnType="rtns:ArrayOf_xsd_anyType" returnItemQName="tns:item" soapAction="">
+        <parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" xmlns:pns="http://hotel_info.database.com" qname="pns:city" type="tns:string"/>
+      </operation>
+      <parameter name="allowedMethods" value="addNewHotel findHotelByCity main"/>
+
+      <arrayMapping xmlns:ns="http://hotel_info.database.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_anyType" type="java:java.lang.Object[]" innerType="cmp-ns:anyType" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://hotel_info.database.com" qname="ns:&gt;findHotelByCity" type="java:com.database.hotel_info.FindHotelByCity" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <arrayMapping xmlns:ns="http://hotel_info.database.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:&gt;main" type="java:java.lang.String[]" innerType="cmp-ns:string" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://hotel_info.database.com" qname="ns:&gt;addNewHotelResponse" type="java:com.database.hotel_info.AddNewHotelResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://hotel_info.database.com" qname="ns:&gt;findHotelByCityResponse" type="java:com.database.hotel_info.FindHotelByCityResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://hotel_info.database.com" qname="ns:&gt;mainResponse" type="java:com.database.hotel_info.MainResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://hotel_info.database.com" qname="ns:&gt;addNewHotel" type="java:com.database.hotel_info.AddNewHotel" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+  </service>
+</deployment>
